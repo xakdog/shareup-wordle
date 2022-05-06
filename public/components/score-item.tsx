@@ -7,16 +7,28 @@ type Props = {
 }
 
 export const ScoreItem: FunctionalComponent<Props> = ({ score }) => (
-  <li class={styles.item}>
-    <dl>
-      <dt>id</dt>
-      <dd>{score.id}</dd>
-      <dt>date</dt>
-      <dd>{score.date}</dd>
-      <dt>word</dt>
-      <dd>{score.word}</dd>
-      <dt>tries</dt>
-      <dd>{score.tries.join(', ')}</dd>
-    </dl>
-  </li>
+  <div class={styles.item}>
+    <div class={styles.head}>
+      <div>#{score.id}</div>
+      <div>{score.date}</div>
+    </div>
+
+    <div className={styles.word}>
+      {score.word.split('').map((letter, idx) => (
+        <div className={styles.letterGreen} key={letter + idx}>{letter}</div>
+      ))}
+    </div>
+
+    <div>
+      {score.tries.map((word, idx) => (
+        <div className={styles.try} key={word + idx}>
+          {word.split('').map((letter, idx) => (
+            <div className={styles.letterGray} key={letter + idx}>
+              {letter}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
 )
