@@ -1,8 +1,7 @@
 import type { FunctionalComponent } from 'preact'
-import { useEffect } from 'preact/hooks'
-import { useBackground } from '../background-context'
 import { useDB } from '../db-context'
 import { useFetched } from '../hooks/use-fetched'
+import { useMessages } from '../hooks/use-messages'
 import type { Score } from '../models'
 import styles from './index.module.css'
 import { Layout } from './layout'
@@ -20,7 +19,9 @@ export const Index: FunctionalComponent<Props> = ({ preloadedScores }) => {
     return db.getAll('scores')
   }, [db])
 
-  // TODO: useBackground(), subscribe for messages from the worker, and refetch()
+  useMessages({
+    onScoresUpdated: refetch
+  })
 
   return (
     <Layout>

@@ -1,5 +1,49 @@
 .item {
-  padding: 0;
-  margin: 0 0 4em;
+  margin: 4em auto;
+  max-width: 320px;
 }
 
+.head {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 0.5rem 0;
+  padding: 0.5em 1em;
+  border-radius: 2em;
+
+  font-weight: bold;
+
+  color: var(--brand-black);
+  background: var(--brand-silver);
+}
+
+.word {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.try {
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+
+.letter,
+.letterGray,
+.letterGreen {
+  width: 3.75rem;
+  height: 3.75rem;
+  margin-right: 0.25rem;
+
+  font-size: 3rem;
+  text-align: center;
+}
+
+.letterGray {
+  color: var(--brand-white);
+  background: var(--brand-grey);
+}
+
+.letterGreen {
+  color: var(--brand-white);
+  background: var(--brand-green);
+}

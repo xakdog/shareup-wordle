@@ -8,6 +8,8 @@ import type { Score } from './models'
 
 type DB = ReturnType<typeof openDB> extends Promise<infer D> ? D : never
 
+const UPDATE_PERIOD = 60 * 1000 // ms
+
 // NOTE: top-level await will be cool someday
 setupBackgroundSyncProcess().catch(e => {
   console.error('error setting up the background sync process', e)
@@ -15,15 +17,28 @@ setupBackgroundSyncProcess().catch(e => {
 
 async function setupBackgroundSyncProcess(): Promise<void> {
   const db = await openDB()
+  const runSync = () => {
+    sync(db).catch(e => {
+      console.error('error running background sync process', e)
+    })
+  }
 
-  // TODO: poll…
-  await sync(db)
+  runSync()
+
+  setInterval(runSync, UPDATE_PERIOD)
 }
 
 async function sync(db: DB): Promise<void> {
   console.group('sync')
 
-  const response = await getScores()
+  let response
+
+  try {
+    response = await getScores()
+  } catch (e) {
+    console.groupEnd()
+    throw e
+  }
 
   console.debug('getScores', response)
 

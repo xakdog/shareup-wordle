@@ -96,7 +96,10 @@ function isHtmlRequest(request: Request): boolean {
 async function getFromNetworkAndCache(e: FetchEvent): Promise<Response> {
   const response = await fetch(e.request)
 
-  if (response.ok) {
+  const isNetworkRequest = e.request.url.startsWith('http')
+  const shouldCache = isNetworkRequest && response.ok
+
+  if (shouldCache) {
     const cache = await caches.open(cacheName)
     cache.put(e.request, response.clone())
   }
